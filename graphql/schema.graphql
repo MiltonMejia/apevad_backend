@@ -1,0 +1,40 @@
+"A date string with format `Y-m-d`, e.g. `2011-05-23`."
+scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
+
+"A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+type Query {
+    teachers: [Teacher!]! @paginate(defaultCount: 10)
+    teacher(id: ID @eq): Teacher @find
+    degrees: [Degree!]! @paginate(defaultCount: 10)
+    degree(id: ID @eq): Degree @find
+    groups: [Group!]! @paginate(defaultCount: 10)
+    group(id: ID @eq): Group @find
+}
+
+type Teacher {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    photo: String
+}
+
+type Degree {
+    id: ID!
+    name: String!
+}
+
+type Group {
+    id: ID!
+    semester: Int!
+    degree: Degree
+}
+
+type Student {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    group: Group!
+    isSurveyCompleted: Boolean!
+}
