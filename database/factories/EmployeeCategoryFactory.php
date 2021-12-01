@@ -3,9 +3,8 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class TeacherFactory extends Factory
+class EmployeeCategoryFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -14,10 +13,10 @@ class TeacherFactory extends Factory
      */
     public function definition()
     {
+        static $index = 0;
+        $categories = ['Administrativo', 'Docente'];
         return [
-            'firstName' => $this->faker->firstName,
-            'lastName' => $this->faker->lastName,
-            'photo' => $this->faker->word() . '.jpg',
+            'name' => $categories[$index++],
         ];
     }
 }

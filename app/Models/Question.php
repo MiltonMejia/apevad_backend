@@ -5,28 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Student extends Authenticatable
+class Question extends Model
 {
     use HasFactory;
 
-    public $incrementing = false;
-    public $keyType = 'string';
-
     protected $fillable = [
-        'firstName',
-        'lastName',
-        'password',
-        'group_id',
-        'isSurveyCompleted'
-    ];
-
-    protected $hidden = [
-        'password',
-        'remember_token',
+        'question',
+        'question_category_id',
+        'employee_category_id',
     ];
 
     protected $casts = [
@@ -34,9 +22,14 @@ class Student extends Authenticatable
         'updated_at' => 'datetime',
     ];
 
-    public function group(): BelongsTo
+    public function employeeCategory(): BelongsTo
     {
-        return $this->belongsTo(Group::class);
+        return $this->belongsTo(EmployeeCategory::class);
+    }
+
+    public function questionCategory(): BelongsTo
+    {
+        return $this->belongsTo(QuestionCategory::class);
     }
 
     public function administrativeSurveys(): HasMany

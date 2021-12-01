@@ -5,28 +5,24 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Student extends Authenticatable
+class Administrative extends Authenticatable
 {
     use HasFactory;
-
-    public $incrementing = false;
-    public $keyType = 'string';
 
     protected $fillable = [
         'firstName',
         'lastName',
+        'email',
+        'photo',
+        'administrative_category_id',
         'password',
-        'group_id',
-        'isSurveyCompleted'
     ];
 
     protected $hidden = [
-        'password',
-        'remember_token',
+        'password', 'remember_token',
     ];
 
     protected $casts = [
@@ -34,9 +30,9 @@ class Student extends Authenticatable
         'updated_at' => 'datetime',
     ];
 
-    public function group(): BelongsTo
+    public function category(): BelongsTo
     {
-        return $this->belongsTo(Group::class);
+        return $this->belongsTo(AdministrativeCategory::class);
     }
 
     public function administrativeSurveys(): HasMany
@@ -44,8 +40,4 @@ class Student extends Authenticatable
         return $this->hasMany(AdministrativeSurvey::class);
     }
 
-    public function teacherSurveys(): HasMany
-    {
-        return $this->hasMany(TeacherSurvey::class);
-    }
 }

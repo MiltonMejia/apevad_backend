@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Degree extends Model
+class AdministrativeCategory extends Model
 {
     use HasFactory;
 
@@ -19,8 +19,8 @@ class Degree extends Model
         'updated_at' => 'datetime',
     ];
 
-    public function groups(): HasMany
+    public function administrators(): HasMany
     {
-        return $this->hasMany(Group::class);
+        return $this->hasMany(Administrator::class);
     }
 }
