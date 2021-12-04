@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Student extends Authenticatable
@@ -41,11 +42,23 @@ class Student extends Authenticatable
 
     public function administrativeSurveys(): HasMany
     {
-        return $this->hasMany(AdministrativeSurvey::class);
+        $relation =  $this->hasMany(AdministrativeSurvey::class);
+        return $relation->with('administrative', 'student', 'question')->orderBy('id', 'asc');
+    }
+
+    public function lastAdministrativeSurvey(): HasOne
+    {
+        return $this->hasOne(AdministrativeSurvey::class)->orderBy('id', 'desc');
     }
 
     public function teacherSurveys(): HasMany
     {
-        return $this->hasMany(TeacherSurvey::class);
+        $relation = $this->hasMany(TeacherSurvey::class);
+        return $relation->with('teacher', 'student', 'question')->orderBy('id', 'asc');
+    }
+
+    public function lastTeacherSurvey(): HasOne
+    {
+        return $this->hasOne(TeacherSurvey::class)->orderBy('id', 'desc');
     }
 }

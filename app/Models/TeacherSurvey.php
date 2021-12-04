@@ -34,7 +34,7 @@ class TeacherSurvey extends Pivot
 
     public function teacher(): BelongsTo
     {
-        return $this->belongsTo(GroupTeacher::class);
+        return $this->belongsTo(GroupTeacher::class, 'group_teacher_id');
     }
 
     public function question(): BelongsTo

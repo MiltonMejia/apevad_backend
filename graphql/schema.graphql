@@ -13,8 +13,6 @@ enum EmployeeCategoryEnum {
     DOCENTE @enum(value: 2)
 }
 
-
-
 type EmployeeCategory {
     id: ID!
     name: String!
@@ -65,6 +63,15 @@ type Student {
     lastName: String!
     isSurveyCompleted: Boolean!
     group: Group! @belongsTo
+    teacherSurveys: [[TeacherSurvey]] @groupBy(groupBy: "teacher.id")
+    lastTeacherSurvey: TeacherSurvey
+    administrativeSurveys: [[AdministrativeSurvey]] @groupBy(groupBy: "administrative.id")
+    lastAdministrativeSurvey: AdministrativeSurvey
+}
+
+type Test {
+    id: Int
+    data: [TeacherSurvey]
 }
 
 type Teacher {

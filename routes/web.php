@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\TeacherSurvey;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $data = TeacherSurvey::whereHas('student', function($query) {
+        $query->where('id', 'F160022');
+    })->get()->groupBy('group_teacher_id');
+    return view('welcome', [
+        'data' => $data
+    ]);
 });
