@@ -5,12 +5,21 @@ scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
 scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
 
 type Query {
+    login (id:String! password:String!):LoginData
     student(id: ID! @eq): Student! @find
 }
 
 enum EmployeeCategoryEnum {
     ADMINISTRATIVO @enum(value: 1)
     DOCENTE @enum(value: 2)
+}
+
+union User = Student | Administrative
+
+type LoginData {
+    token: String
+    error: String
+    user: User
 }
 
 type EmployeeCategory {
