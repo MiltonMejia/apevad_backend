@@ -35,6 +35,7 @@ return [
             // middleware, this delegates auth and permission checks to the field level.
             \Nuwave\Lighthouse\Support\Http\Middleware\AttemptAuthentication::class,
             \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+            \App\Http\Middleware\localization::class,
             // Logs every incoming GraphQL query.
             // \Nuwave\Lighthouse\Support\Http\Middleware\LogGraphQLQueries::class,
         ],

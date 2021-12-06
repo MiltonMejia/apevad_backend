@@ -2,8 +2,11 @@
 
 namespace App\GraphQL\Queries;
 
+use App\Models\Administrative;
+use App\Models\Student;
 use GraphQL\Type\Definition\ResolveInfo;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
 class Login
@@ -14,15 +17,24 @@ class Login
      */
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolve)
     {
-        if(!Auth::attempt(['id' => $args['id'], 'password' => $args['password']]))
-        {
+        $student = Auth::guard('student');
+        if($student->attempt($args)) {
             return [
-                'error' => 'User or password is incorrect',
+                'token' => $student->user()->createToken('Student')->plainTextToken,
+                'user' => $student->user()
             ];
         }
+
+        $administrative = Auth::guard('administrative');
+        if($administrative->attempt(['email' => $args['id'], 'password' => $args['password']])) {
+            return [
+                'token' => $administrative->user()->createToken('Student')->plainTextToken,
+                'user' => $administrative->user()
+            ];
+        }
+
         return [
-            'token' => Auth::user()->createToken('Student')->plainTextToken,
-            'user' => Auth::user(),
+            'error' => trans('auth.failed')
         ];
     }
 }

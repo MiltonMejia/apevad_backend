@@ -25,7 +25,8 @@ class Student extends Authenticatable
         'lastName',
         'password',
         'group_id',
-        'isSurveyCompleted'
+        'isSurveyCompleted',
+        'password'
     ];
 
     protected $hidden = [
