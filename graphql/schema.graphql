@@ -69,8 +69,8 @@ type Group {
 
 type Student {
     id: ID!
-    firstName: String!
-    lastName: String!
+    firstName: String @canAccess(roles: ["student"])
+    lastName: String
     isSurveyCompleted: Boolean!
     group: Group! @belongsTo
     teacherSurveys: [[TeacherSurvey]] @groupBy(groupBy: "teacher.id")

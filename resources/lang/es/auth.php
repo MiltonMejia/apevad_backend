@@ -16,5 +16,5 @@ return [
     'failed' => 'El usuario y/o contraseña es incorrecto',
     'password' => 'La contraseña es incorrecta',
     'throttle' => 'Ha superado el límite máximo de intentos. Vuelva a intentarlo en :seconds segundos.',
-
+    'role' => 'No tiene los permisos necesarios para acceder a este contenido'
 ];
