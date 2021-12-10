@@ -64,18 +64,18 @@ type Group {
     id: ID!
     semester: String!
     degree: Degree! @belongsTo
-    teachers: [GroupTeacher!] @hasMany
+    teachers: [GroupTeacher!] @hasMany @canAccess(roles: ["administrative"])
 }
 
 type Student {
     id: ID!
-    firstName: String @canAccess(roles: ["student"])
+    firstName: String
     lastName: String
     isSurveyCompleted: Boolean!
     group: Group! @belongsTo
-    teacherSurveys: [[TeacherSurvey]] @groupBy(groupBy: "teacher.id")
+    teacherSurveys: [[TeacherSurvey]] @canAccess(roles: ["administrative"]) @groupBy(groupBy: "teacher.id")
     lastTeacherSurvey: TeacherSurvey
-    administrativeSurveys: [[AdministrativeSurvey]] @groupBy(groupBy: "administrative.id")
+    administrativeSurveys: [[AdministrativeSurvey]] @canAccess(roles: ["administrative"]) @groupBy(groupBy: "administrative.id")
     lastAdministrativeSurvey: AdministrativeSurvey
 }
 
@@ -89,7 +89,7 @@ type Teacher {
     firstName: String!
     lastName: String!
     photo: String
-    groups: [GroupTeacher!] @hasMany
+    groups: [GroupTeacher!] @hasMany @canAccess(roles: ["administrative"])
 }
 
 type GroupTeacher {
