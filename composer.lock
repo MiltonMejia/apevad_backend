@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "18372c599e9610fb486c06236971592f",
+    "content-hash": "753d071057df0314133b97a3278c70e1",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2218,16 +2218,16 @@
         },
         {
             "name": "nuwave/lighthouse",
-            "version": "v5.30.0",
+            "version": "v5.31.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nuwave/lighthouse.git",
-                "reference": "3ba2353a9c3f83ab1e6cc152455625054455708a"
+                "reference": "9525acf3fa898cee1dde327c72dae1ef93f57fae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nuwave/lighthouse/zipball/3ba2353a9c3f83ab1e6cc152455625054455708a",
-                "reference": "3ba2353a9c3f83ab1e6cc152455625054455708a",
+                "url": "https://api.github.com/repos/nuwave/lighthouse/zipball/9525acf3fa898cee1dde327c72dae1ef93f57fae",
+                "reference": "9525acf3fa898cee1dde327c72dae1ef93f57fae",
                 "shasum": ""
             },
             "require": {
@@ -2345,7 +2345,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-09T09:20:14+00:00"
+            "time": "2021-12-10T17:09:25+00:00"
         },
         {
             "name": "opis/closure",
@@ -8461,6 +8461,8 @@
     "platform": {
         "php": "^7.3|^8.0"
     },
-    "platform-dev": [],
+    "platform-dev": {
+        "ext-json": "*"
+    },
     "plugin-api-version": "2.1.0"
 }

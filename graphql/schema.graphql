@@ -6,8 +6,14 @@ scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date
 
 type Query {
     login (id:String! password:String!):LoginData
-    student(id: ID! @eq): Student! @find
+    student(id:String! @eq): Student! @find
+    administrative(id:Int! @eq): Administrative @find
+    teacher(id:Int! @eq): Teacher @find
+    group(id:String! @eq): Group @find
     me: User @auth
+}
+
+mutation Mutation {
 }
 
 enum EmployeeCategoryEnum {
@@ -77,11 +83,6 @@ type Student {
     lastTeacherSurvey: TeacherSurvey
     administrativeSurveys: [[AdministrativeSurvey]] @canAccess(roles: ["administrative"]) @groupBy(groupBy: "administrative.id")
     lastAdministrativeSurvey: AdministrativeSurvey
-}
-
-type Test {
-    id: Int
-    data: [TeacherSurvey]
 }
 
 type Teacher {

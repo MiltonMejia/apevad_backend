@@ -23,7 +23,7 @@ class LoginQueryTest extends TestCase
         //You must change id value after seeding database
         $id = "F160012";
         $password = "password";
-        $this->graphQL(/** @lang GraphQL */ '
+        $result = $this->graphQL(/** @lang GraphQL */ '
             query ($id: String!, $password: String!) {
                 login(id: $id, password: $password) {
                     token,
@@ -37,19 +37,9 @@ class LoginQueryTest extends TestCase
                     }
             }
         }
-        ', ['id' => $id, 'password' => $password])->assertJsonStructure([
-            'data' => [
-                'login' => [
-                    'token',
-                    'error',
-                    'user' => [
-                        'id',
-                        'firstName',
-                        'lastName'
-                    ]
-                ],
-            ],
-        ]);
+        ', ['id' => $id, 'password' => $password])->baseResponse->original['data'];
+
+        $this->assertIsString($result['login']['token']);
     }
 
     /** @test */
@@ -58,7 +48,7 @@ class LoginQueryTest extends TestCase
         //You must change email value after seeding database
         $id = "arlo.cassin@example.com";
         $password = "password";
-        $this->graphQL(/** @lang GraphQL */ '
+        $result = $this->graphQL(/** @lang GraphQL */ '
             query ($id: String!, $password: String!) {
                 login(id: $id, password: $password) {
                     token,
@@ -72,19 +62,9 @@ class LoginQueryTest extends TestCase
                     }
             }
         }
-        ', ['id' => $id, 'password' => $password])->assertJsonStructure([
-            'data' => [
-                'login' => [
-                    'token',
-                    'error',
-                    'user' => [
-                        'id',
-                        'firstName',
-                        'lastName'
-                    ]
-                ],
-            ],
-        ]);
+        ', ['id' => $id, 'password' => $password])->baseResponse->original['data'];
+
+        $this->assertIsString($result['login']['token']);
     }
 
     /** @test */
@@ -92,7 +72,7 @@ class LoginQueryTest extends TestCase
     {
         //You must get token manually
         $token = "1|5rLoOUvTHAHSlzY6HvQBf6X5oLCHaa5OY7QWSfKC";
-        $this->graphQL(/** @lang GraphQL */ '
+        $result = $this->graphQL(/** @lang GraphQL */ '
             query {
                 me {
                 ... on Student {
@@ -102,15 +82,9 @@ class LoginQueryTest extends TestCase
                     }
                 }
         }
-        ', [], [], ['Authorization' => "Bearer $token"])->assertJsonStructure([
-            'data' => [
-                'me' => [
-                    'id',
-                    'firstName',
-                    'lastName'
-                ],
-            ],
-        ]);
+        ', [], [], ['Authorization' => "Bearer $token"])->baseResponse->original['data'];
+
+        $this->assertIsString($result['me']['id']);
     }
 
     /** @test */
@@ -118,7 +92,7 @@ class LoginQueryTest extends TestCase
     {
         //You must get token manually
         $token = "34|Qcp5xkqSlaEi2hfUtG184mUzq8dqd4kFXo0K63KC";
-        $this->graphQL(/** @lang GraphQL */ '
+        $result = $this->graphQL(/** @lang GraphQL */ '
             query {
                 me {
                 ... on Administrative {
@@ -128,14 +102,8 @@ class LoginQueryTest extends TestCase
                     }
                 }
         }
-        ', [], [], ['Authorization' => "Bearer $token"])->assertJsonStructure([
-            'data' => [
-                'me' => [
-                    'id',
-                    'firstName',
-                    'lastName'
-                ],
-            ],
-        ]);
+        ', [], [], ['Authorization' => "Bearer $token"])->baseResponse->original['data'];
+
+        $this->assertIsString($result['me']['id']);
     }
 }
