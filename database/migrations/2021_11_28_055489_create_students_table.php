@@ -17,9 +17,9 @@ class CreateStudentsTable extends Migration
             $table->string('id')->unique();
             $table->string('firstName', 100);
             $table->string('lastName', 100);
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->string('group_id');
-            $table->boolean('isSurveyCompleted');
+            $table->boolean('isSurveyCompleted')->default(false);
             $table->rememberToken();
             $table->timestamps();
 

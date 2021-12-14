@@ -1,0 +1,91 @@
+type LoginData {
+    token: String
+    error: String
+    user: User
+}
+
+type EmployeeCategory {
+    id: ID!
+    name: String!
+}
+
+type QuestionCategory {
+    id: ID!
+    name: String!
+    description: String
+}
+
+type Question {
+    id: ID!
+    question: String!
+    employeeCategory: EmployeeCategory! @belongsTo
+    questionCategory: QuestionCategory! @belongsTo
+}
+
+type AdministrativeCategory {
+    id: ID!
+    name: String!
+}
+
+type Administrative {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    email: String!
+    photo: String
+    administrativeCategory: AdministrativeCategory! @belongsTo
+}
+
+type Degree {
+    id: ID!
+    name: String!
+}
+
+type Group {
+    id: ID!
+    semester: String!
+    degree: Degree! @belongsTo
+    teachers: [GroupTeacher!] @hasMany @canAccess(roles: ["administrative"])
+}
+
+type Student {
+    id: ID!
+    firstName: String
+    lastName: String
+    isSurveyCompleted: Boolean!
+    group: Group! @belongsTo
+    teacherSurveys: [[TeacherSurvey]] @canAccess(roles: ["administrative"]) @groupBy(groupBy: "teacher.id")
+    lastTeacherSurvey: TeacherSurvey
+    administrativeSurveys: [[AdministrativeSurvey]] @canAccess(roles: ["administrative"]) @groupBy(groupBy: "administrative.id")
+    lastAdministrativeSurvey: AdministrativeSurvey
+}
+
+type Teacher {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    photo: String
+    groups: [GroupTeacher!] @hasMany @canAccess(roles: ["administrative"])
+}
+
+type GroupTeacher {
+    id: ID!
+    teacher: Teacher! @belongsTo
+    group: Group! @belongsTo
+}
+
+type AdministrativeSurvey {
+    id: ID!
+    student: Student! @belongsTo
+    administrative: Administrative! @belongsTo
+    question: Question! @belongsTo
+    score: Int!
+}
+
+type TeacherSurvey {
+    id: ID!
+    student: Student! @belongsTo
+    teacher: GroupTeacher! @belongsTo
+    question: Question! @belongsTo
+    score: Int!
+}

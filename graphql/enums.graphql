@@ -1,0 +1,4 @@
+enum EmployeeCategoryEnum {
+    ADMINISTRATIVO @enum(value: 1)
+    DOCENTE @enum(value: 2)
+}

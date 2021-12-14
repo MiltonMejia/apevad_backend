@@ -22,12 +22,11 @@ class Student extends Authenticatable
     public $keyType = 'string';
 
     protected $fillable = [
+        'id',
         'firstName',
         'lastName',
-        'password',
         'group_id',
         'isSurveyCompleted',
-        'password'
     ];
 
     protected $hidden = [
@@ -38,6 +37,10 @@ class Student extends Authenticatable
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
+    ];
+
+    protected $attributes = [
+        'isSurveyCompleted' => false
     ];
 
     public function group(): BelongsTo

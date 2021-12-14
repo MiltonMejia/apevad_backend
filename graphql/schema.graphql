@@ -4,6 +4,8 @@ scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
 "A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
 scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
 
+scalar Upload @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Upload")
+
 type Query {
     login (id:String! password:String!):LoginData
     student(id:String! @eq): Student! @find
@@ -13,104 +15,29 @@ type Query {
     me: User @auth
 }
 
-mutation Mutation {
+type Mutation {
+    createStudent(student: StudentInput! @spread): Student @create
+    createAdministrative(administrative: AdministrativeInput! @spread): Administrative @create
 }
 
-enum EmployeeCategoryEnum {
-    ADMINISTRATIVO @enum(value: 1)
-    DOCENTE @enum(value: 2)
-}
-
-union User = Student | Administrative
-
-type LoginData {
-    token: String
-    error: String
-    user: User
-}
-
-type EmployeeCategory {
-    id: ID!
-    name: String!
-}
-
-type QuestionCategory {
-    id: ID!
-    name: String!
-    description: String
-}
-
-type Question {
-    id: ID!
-    question: String!
-    employeeCategory: EmployeeCategory! @belongsTo
-    questionCategory: QuestionCategory! @belongsTo
-}
-
-type AdministrativeCategory {
-    id: ID!
-    name: String!
-}
-
-type Administrative {
-    id: ID!
-    firstName: String!
-    lastName: String!
-    email: String!
-    photo: String
-    administrativeCategory: AdministrativeCategory! @belongsTo
-}
-
-type Degree {
-    id: ID!
-    name: String!
-}
-
-type Group {
-    id: ID!
-    semester: String!
-    degree: Degree! @belongsTo
-    teachers: [GroupTeacher!] @hasMany @canAccess(roles: ["administrative"])
-}
-
-type Student {
-    id: ID!
+input StudentInput {
+    id: ID!,
     firstName: String
     lastName: String
-    isSurveyCompleted: Boolean!
-    group: Group! @belongsTo
-    teacherSurveys: [[TeacherSurvey]] @canAccess(roles: ["administrative"]) @groupBy(groupBy: "teacher.id")
-    lastTeacherSurvey: TeacherSurvey
-    administrativeSurveys: [[AdministrativeSurvey]] @canAccess(roles: ["administrative"]) @groupBy(groupBy: "administrative.id")
-    lastAdministrativeSurvey: AdministrativeSurvey
+    group: String @rename(attribute: "group_id")
 }
 
-type Teacher {
-    id: ID!
+input AdministrativeInput {
     firstName: String!
-    lastName: String!
-    photo: String
-    groups: [GroupTeacher!] @hasMany @canAccess(roles: ["administrative"])
+    lastName: String!,
+    email: String!,
+    category: Int! @rename(attribute: "administrative_category_id")
 }
 
-type GroupTeacher {
-    id: ID!
-    teacher: Teacher! @belongsTo
-    group: Group! @belongsTo
-}
+#import unions.graphql
+#import enums.graphql
+#import types.graphql
 
-type AdministrativeSurvey {
-    id: ID!
-    student: Student! @belongsTo
-    administrative: Administrative! @belongsTo
-    question: Question! @belongsTo
-    score: Int!
-}
 
-type TeacherSurvey {
-    id: ID!
-    student: Student! @belongsTo
-    teacher: GroupTeacher! @belongsTo
-    question: Question! @belongsTo
-    score: Int!
-}
+
+

@@ -20,7 +20,7 @@ class CreateAdministrativesTable extends Migration
             $table->string('email')->unique();
             $table->string('photo')->nullable();
             $table->unsignedTinyInteger('administrative_category_id', false);
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->rememberToken();
             $table->timestamps();
 
