@@ -18,25 +18,14 @@ type Query {
 type Mutation {
     createStudent(student: StudentInput! @spread): Student @create
     createAdministrative(administrative: AdministrativeInput! @spread): Administrative
-}
-
-input StudentInput {
-    id: ID! @rules(apply: ["required", "string", "max:100"])
-    firstName: String @rules(apply: ["required", "string", "max:100"])
-    lastName: String @rules(apply: ["required", "string", "max:100"])
-    groupID: String @rename(attribute: "group_id") @rules(apply: ["required", "string", "max:25"])
-}
-
-input AdministrativeInput {
-    firstName: String! @rules(apply: ["required", "string", "max:100"])
-    lastName: String! @rules(apply: ["required", "string", "max:100"])
-    email: String! @rules(apply: ["required", "email"])
-    photo: Upload @rules(apply: ["file", "image", "max:10240"])
-    categoryID: Int! @rename(attribute: "administrative_category_id") @rules(apply: ["required", "numeric"])
+    createTeacher(teacher: TeacherInput! @spread): Teacher
+    createEmployeeCategory(name: String!): EmployeeCategory @create
+    createQuestionCategory(category: QuestionCategoryInput! @spread): QuestionCategory @create
 }
 
 #import unions.graphql
 #import enums.graphql
+#import inputs.graphql
 #import types.graphql
 
 

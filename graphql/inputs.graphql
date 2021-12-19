@@ -1,0 +1,27 @@
+input StudentInput {
+    id: ID! @rules(apply: ["required", "string", "max:100"])
+    firstName: String @rules(apply: ["required", "string", "max:100"])
+    lastName: String @rules(apply: ["required", "string", "max:100"])
+    password: String @rules(apply: ["string"]) @hash
+    groupID: String @rename(attribute: "group_id") @rules(apply: ["required", "string", "max:25"])
+}
+
+input AdministrativeInput {
+    firstName: String! @rules(apply: ["required", "string", "max:100"])
+    lastName: String! @rules(apply: ["required", "string", "max:100"])
+    email: String! @rules(apply: ["required", "email"])
+    photo: Upload @rules(apply: ["file", "image", "max:10240"])
+    password: String @rules(apply: ["string"]) @hash
+    categoryID: Int! @rename(attribute: "administrative_category_id") @rules(apply: ["required", "numeric"])
+}
+
+input TeacherInput {
+    firstName: String! @rules(apply: ["required", "string", "max:100"])
+    lastName: String! @rules(apply: ["required", "string", "max:100"])
+    photo: Upload @rules(apply: ["file", "image", "max:10240"])
+}
+
+input QuestionCategoryInput {
+    name: String! @rules(apply: ["required", "string", "max:50"])
+    description: String @rules(apply: ["string", "max:255"])
+}

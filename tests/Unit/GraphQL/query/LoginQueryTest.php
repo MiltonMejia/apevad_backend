@@ -2,6 +2,9 @@
 
 namespace Tests\Unit;
 
+use App\Models\Administrative;
+use App\Models\Student;
+use Illuminate\Foundation\Testing\WithFaker;
 use Nuwave\Lighthouse\Testing\ClearsSchemaCache;
 use Nuwave\Lighthouse\Testing\MakesGraphQLRequests;
 use Tests\TestCase;
@@ -10,6 +13,9 @@ class LoginQueryTest extends TestCase
 {
     use MakesGraphQLRequests;
     use ClearsSchemaCache;
+    use WithFaker;
+
+    private string $loginPassword = 'password';
 
     protected function setUp(): void
     {
@@ -20,58 +26,21 @@ class LoginQueryTest extends TestCase
     /** @test */
     public function testStudentLogin(): void
     {
-        //You must change id value after seeding database
-        $id = "F160012";
-        $password = "password";
-        $result = $this->graphQL(/** @lang GraphQL */ '
-            query ($id: String!, $password: String!) {
-                login(id: $id, password: $password) {
-                    token,
-                    error,
-                    user {
-                    ... on Student {
-                            id,
-                            firstName,
-                            lastName
-                        }
-                    }
-            }
-        }
-        ', ['id' => $id, 'password' => $password])->baseResponse->original['data'];
-
-        $this->assertIsString($result['login']['token']);
+        $result = $this->getStudentLogin();
+        $this->assertIsString($result);
     }
 
     /** @test */
     public function testAdministrativeLogin(): void
     {
-        //You must change email value after seeding database
-        $id = "arlo.cassin@example.com";
-        $password = "password";
-        $result = $this->graphQL(/** @lang GraphQL */ '
-            query ($id: String!, $password: String!) {
-                login(id: $id, password: $password) {
-                    token,
-                    error,
-                    user {
-                    ... on Administrative {
-                            id,
-                            firstName,
-                            lastName
-                        }
-                    }
-            }
-        }
-        ', ['id' => $id, 'password' => $password])->baseResponse->original['data'];
-
-        $this->assertIsString($result['login']['token']);
+        $result = $this->getAdministrativeLogin();
+        $this->assertIsString($result);
     }
 
     /** @test */
     public function testStudentLogged()
     {
-        //You must get token manually
-        $token = "1|5rLoOUvTHAHSlzY6HvQBf6X5oLCHaa5OY7QWSfKC";
+        $token = $this->getStudentLogin();
         $result = $this->graphQL(/** @lang GraphQL */ '
             query {
                 me {
@@ -90,8 +59,7 @@ class LoginQueryTest extends TestCase
     /** @test */
     public function testAdministrativeLogged()
     {
-        //You must get token manually
-        $token = "34|Qcp5xkqSlaEi2hfUtG184mUzq8dqd4kFXo0K63KC";
+        $token = $this->getAdministrativeLogin();
         $result = $this->graphQL(/** @lang GraphQL */ '
             query {
                 me {
@@ -105,5 +73,30 @@ class LoginQueryTest extends TestCase
         ', [], [], ['Authorization' => "Bearer $token"])->baseResponse->original['data'];
 
         $this->assertIsString($result['me']['id']);
+    }
+
+    private function getStudentLogin()
+    {
+        $id = Student::inRandomOrder()->first()->id;
+        return $this->graphQL(/** @lang GraphQL */ '
+            query ($id: String!, $password: String!) {
+                login(id: $id, password: $password) {
+                    token
+            }
+        }
+        ', ['id' => $id, 'password' => $this->loginPassword])->baseResponse->original['data']['login']['token'];
+    }
+
+    private function getAdministrativeLogin()
+    {
+        $id = Administrative::inRandomOrder()->first()->email;
+        print_r($id);
+        return $this->graphQL(/** @lang GraphQL */ '
+            query ($id: String!, $password: String!) {
+                login(id: $id, password: $password) {
+                    token
+            }
+        }
+        ', ['id' => $id, 'password' => $this->loginPassword])->baseResponse->original['data']['login']['token'];
     }
 }
