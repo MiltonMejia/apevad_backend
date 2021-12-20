@@ -18,7 +18,7 @@ class AdministrativeQueryTest extends TestCase
     }
 
     /** @test */
-    public function testAdministrativeData()
+    public function testAdministrativeData(): void
     {
         $id = 1;
         $result = $this->graphQL(/** @lang GraphQL */ '

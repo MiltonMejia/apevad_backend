@@ -20,7 +20,7 @@ class QuestionCategoryMutationTest extends TestCase
     }
 
     /** @test */
-    public function testQuestionCategory()
+    public function testQuestionCategory(): void
     {
         $questionCategory = [
             'name' => $this->faker->sentence(2, false),

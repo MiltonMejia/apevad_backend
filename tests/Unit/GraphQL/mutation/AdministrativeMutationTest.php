@@ -22,7 +22,7 @@ class AdministrativeMutationTest extends TestCase
     }
 
     /** @test */
-    public function testCreateAdministrative()
+    public function testCreateAdministrative(): void
     {
         $photo = UploadedFile::fake()->create('test.jpg', 500);
         $administrative = [
@@ -64,7 +64,7 @@ class AdministrativeMutationTest extends TestCase
     }
 
     /** @test */
-    public function testCreateAdministrativeNoPhoto()
+    public function testCreateAdministrativeNoPhoto(): void
     {
         $administrative = [
             'firstName' => $this->faker->firstName,

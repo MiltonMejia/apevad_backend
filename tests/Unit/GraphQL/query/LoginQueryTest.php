@@ -38,7 +38,7 @@ class LoginQueryTest extends TestCase
     }
 
     /** @test */
-    public function testStudentLogged()
+    public function testStudentLogged(): void
     {
         $token = $this->getStudentLogin();
         $result = $this->graphQL(/** @lang GraphQL */ '
@@ -57,7 +57,7 @@ class LoginQueryTest extends TestCase
     }
 
     /** @test */
-    public function testAdministrativeLogged()
+    public function testAdministrativeLogged(): void
     {
         $token = $this->getAdministrativeLogin();
         $result = $this->graphQL(/** @lang GraphQL */ '
@@ -75,7 +75,7 @@ class LoginQueryTest extends TestCase
         $this->assertIsString($result['me']['id']);
     }
 
-    private function getStudentLogin()
+    private function getStudentLogin(): string
     {
         $id = Student::inRandomOrder()->first()->id;
         return $this->graphQL(/** @lang GraphQL */ '
@@ -87,7 +87,7 @@ class LoginQueryTest extends TestCase
         ', ['id' => $id, 'password' => $this->loginPassword])->baseResponse->original['data']['login']['token'];
     }
 
-    private function getAdministrativeLogin()
+    private function getAdministrativeLogin(): string
     {
         $id = Administrative::inRandomOrder()->first()->email;
         print_r($id);

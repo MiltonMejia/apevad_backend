@@ -18,7 +18,7 @@ class StudentQueryTest extends TestCase
     }
 
     /** @test */
-    public function testStudentData()
+    public function testStudentData(): void
     {
         $id = "F160012";
         $result = $this->graphQL(/** @lang GraphQL */ '

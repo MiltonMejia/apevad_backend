@@ -22,7 +22,7 @@ class StudentMutationTest extends TestCase
     }
 
     /** @test */
-    public function testCreateStudent()
+    public function testCreateStudent(): void
     {
         $studentID = ltrim(Student::orderBy('id', 'desc')->first()->id, 'F');
         $groupID = Group::inRandomOrder()->first()->id;

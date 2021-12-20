@@ -21,7 +21,7 @@ class TeacherMutationTest extends TestCase
     }
 
     /** @test */
-    public function testCreateTeacher()
+    public function testCreateTeacher(): void
     {
         $photo = UploadedFile::fake()->create('test.jpg', 500);
         $teacher = [
@@ -57,7 +57,7 @@ class TeacherMutationTest extends TestCase
     }
 
     /** @test */
-    public function testCreateTeacherNoPhoto()
+    public function testCreateTeacherNoPhoto(): void
     {
         $teacher = [
             'firstName' => $this->faker->firstName,

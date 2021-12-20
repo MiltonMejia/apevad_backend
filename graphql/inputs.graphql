@@ -25,3 +25,9 @@ input QuestionCategoryInput {
     name: String! @rules(apply: ["required", "string", "max:50"])
     description: String @rules(apply: ["string", "max:255"])
 }
+
+input GroupInput {
+    id: ID! @rules(apply: ["required", "string"])
+    semester: String! @rules(apply: ["required", "string"])
+    degreeID: Int! @rename(attribute: "degree_id") @rules(apply: ["required", "numeric"])
+}

@@ -18,7 +18,7 @@ class GroupQueryTest extends TestCase
     }
 
     /** @test */
-    public function testTeacherData()
+    public function testTeacherData(): void
     {
         $id = "F6AM";
         $result = $this->graphQL(/** @lang GraphQL */ '

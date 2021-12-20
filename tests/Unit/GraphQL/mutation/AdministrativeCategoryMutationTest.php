@@ -7,7 +7,7 @@ use Nuwave\Lighthouse\Testing\ClearsSchemaCache;
 use Nuwave\Lighthouse\Testing\MakesGraphQLRequests;
 use Tests\TestCase;
 
-class EmployeeCategoryMutationTest extends TestCase
+class AdministrativeCategoryMutationTest extends TestCase
 {
     use MakesGraphQLRequests;
     use ClearsSchemaCache;
@@ -20,16 +20,16 @@ class EmployeeCategoryMutationTest extends TestCase
     }
 
     /** @test */
-    public function testCreateEmployeeCategory(): void
+    public function testCreateAdministrativeCategory(): void
     {
-        $employeeCategory = $this->faker->sentence(1, false);
+        $category = $this->faker->sentence(2, false);
         $result = $this->graphQL(/** @lang GraphQL */ '
-            mutation ($employeeCategory: String!) {
-                createEmployeeCategory(name: $employeeCategory) {
+            mutation ($category: String!) {
+                createAdministrativeCategory(name: $category) {
                     id
                 }
             }
-        ', ['employeeCategory' => $employeeCategory])->baseResponse->original['data'];
-        $this->assertIsString($result['createEmployeeCategory']['id']);
+        ', ['category' => $category])->baseResponse->original['data'];
+        $this->assertIsString($result['createAdministrativeCategory']['id']);
     }
 }

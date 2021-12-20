@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Group;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 
@@ -20,7 +21,7 @@ class StudentFactory extends Factory
             'firstName' => $this->faker->firstName,
             'lastName' => $this->faker->lastName,
             'password' => Hash::make('password'),
-            'group_id' => $this->faker->randomElement(['D1AV', 'E7CS', 'F6AV', 'G8CD', 'H5AV', 'I6CD', 'J2BM', 'K5EV', 'L4AV', 'M1EM']),
+            'group_id' => Group::inRandomOrder()->first()->id,
             'isSurveyCompleted' => $this->faker->boolean,
         ];
     }

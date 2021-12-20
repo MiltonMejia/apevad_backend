@@ -2,12 +2,14 @@
 
 namespace Tests\Unit\GraphQL\mutation;
 
+use App\Models\Degree;
+use App\Models\Group;
 use Illuminate\Foundation\Testing\WithFaker;
 use Nuwave\Lighthouse\Testing\ClearsSchemaCache;
 use Nuwave\Lighthouse\Testing\MakesGraphQLRequests;
 use Tests\TestCase;
 
-class EmployeeCategoryMutationTest extends TestCase
+class DegreeMutationTest extends TestCase
 {
     use MakesGraphQLRequests;
     use ClearsSchemaCache;
@@ -20,16 +22,16 @@ class EmployeeCategoryMutationTest extends TestCase
     }
 
     /** @test */
-    public function testCreateEmployeeCategory(): void
+    public function testCreateDegree(): void
     {
-        $employeeCategory = $this->faker->sentence(1, false);
+        $degree = $this->faker->sentence(2, false);
         $result = $this->graphQL(/** @lang GraphQL */ '
-            mutation ($employeeCategory: String!) {
-                createEmployeeCategory(name: $employeeCategory) {
+            mutation ($degree: String!) {
+                createDegree(name: $degree) {
                     id
                 }
             }
-        ', ['employeeCategory' => $employeeCategory])->baseResponse->original['data'];
-        $this->assertIsString($result['createEmployeeCategory']['id']);
+        ', ['degree' => $degree])->baseResponse->original['data'];
+        $this->assertIsString($result['createDegree']['id']);
     }
 }
