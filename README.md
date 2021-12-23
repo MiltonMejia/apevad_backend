@@ -24,3 +24,18 @@ APEVAD (Aplicación para la Evaluación de Administrativos y Docentes) es una ap
 - Angular
 
 # Base de datos
+![Database](https://github.com/MiltonMejia/apevad_backend/blob/main/docs/database.png)
+
+# Iniciar proyecto
+- Crear base de datos 'apevad_backend' en Mysql
+- Correr comandos artisan:
+  - php artisan key:generate
+  - php artisan config:clear
+  - php artisan cache:clear
+  - php artisan route:clear
+  - php artisan view:clear
+  - php artisan optimize:clear
+  - php artisan optimize
+  - php artisan migrate:fresh --seed
+- Abrir GraphQL Playground incorporado para ver los datos en Graphql
+  - http://127.0.0.1:8000/graphql-playground
