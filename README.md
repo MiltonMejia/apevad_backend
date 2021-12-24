@@ -37,5 +37,6 @@ APEVAD (Aplicación para la Evaluación de Administrativos y Docentes) es una ap
   - php artisan optimize:clear
   - php artisan optimize
   - php artisan migrate:fresh --seed
-- Abrir GraphQL Playground incorporado para ver los datos en Graphql
+- Para ver los datos en GraphQL:
+  - Ejecutar: php artisan serve
   - http://127.0.0.1:8000/graphql-playground
