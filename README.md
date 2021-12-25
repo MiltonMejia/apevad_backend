@@ -26,6 +26,9 @@ APEVAD (Aplicación para la Evaluación de Administrativos y Docentes) es una ap
 # Base de datos
 ![Database](https://github.com/MiltonMejia/apevad_backend/blob/main/docs/database.png)
 
+# GraphQL Schema
+![Schema](https://github.com/MiltonMejia/apevad_backend/blob/main/docs/schema.png)
+
 # Iniciar proyecto
 - Crear base de datos 'apevad_backend' en Mysql
 - Correr comandos artisan:
